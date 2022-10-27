@@ -1,0 +1,57 @@
+{
+  "author": "atirage",
+  "description": "miLight adapter add-on for WebThings Gateway",
+  "gateway_specific_settings": {
+    "webthings": {
+      "exec": "{nodeLoader} {path}",
+      "primary_type": "adapter",
+      "strict_max_version": "*",
+      "strict_min_version": "0.10.0"
+    }
+  },
+  "homepage_url": "https://github.com/atirage/miLight-adapter#readme",
+  "id": "miLight-adapter",
+  "license": "MPL-2.0",
+  "manifest_version": 1,
+  "name": "miLight",
+  "options": {
+    "default": {
+      "bulbs": [
+        {
+          "bridgeIP": "192.168.0.66",
+          "bridgePort": 8899,
+          "zone": 0
+        }
+      ]
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "bulbs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "bridgeIP"
+            ],
+            "properties": {
+              "bridgeIP": {
+                "type": "string"
+              },
+              "bridgePort": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "zone": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "short_name": "miLight",
+  "version": "0.0.6"
+}

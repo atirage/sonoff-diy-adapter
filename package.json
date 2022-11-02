@@ -1,8 +1,8 @@
 {
-  "name": "miLight-adapter",
-  "display_name": "miLight",
+  "name": "sonoff-diy-adapter",
+  "display_name": "sonoff-diy",
   "version": "0.0.6",
-  "description": "miLight adapter add-on for WebThings Gateway",
+  "description": "sonoff-diy adapter add-on for WebThings Gateway",
   "author": "atirage",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   },
   "keywords": [
     "adapter",
-    "miLight"
+    "sonoff-diy"
   ],
-  "homepage": "https://github.com/atirage/miLight-adapter#readme",
+  "homepage": "https://github.com/atirage/sonoff-diy-adapter#readme",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "SHA256SUMS",
     "index.js",
     "manifest.json",
-    "miLight-adapter.js"
+    "sonoff-diy-adapter.js"
   ],
   "dependencies": {
     "color": "^3.1.3"

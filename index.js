@@ -8,4 +8,4 @@
 
 'use strict';
 
-module.exports = require('./miLight-adapter');
+module.exports = require('./sonoff-diy-adapter');

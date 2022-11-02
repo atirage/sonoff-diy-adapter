@@ -1,6 +1,6 @@
 {
   "author": "atirage",
-  "description": "miLight adapter add-on for WebThings Gateway",
+  "description": "sonoff-diy adapter add-on for WebThings Gateway",
   "gateway_specific_settings": {
     "webthings": {
       "exec": "{nodeLoader} {path}",
@@ -9,30 +9,29 @@
       "strict_min_version": "0.10.0"
     }
   },
-  "homepage_url": "https://github.com/atirage/miLight-adapter#readme",
-  "id": "miLight-adapter",
+  "homepage_url": "https://github.com/atirage/sonoff-diy-adapter#readme",
+  "id": "sonoff-diy-adapter",
   "license": "MPL-2.0",
   "manifest_version": 1,
-  "name": "miLight",
+  "name": "sonoff-diy",
   "options": {
     "default": {
-      "bulbs": [
+      "switches": [
         {
-          "bridgeIP": "192.168.0.66",
-          "bridgePort": 8899,
-          "zone": 0
+          "IP": "192.168.1.66",
+          "Port": 8899
         }
       ]
     },
     "schema": {
       "type": "object",
       "properties": {
-        "bulbs": {
+        "switches": {
           "type": "array",
           "items": {
             "type": "object",
             "required": [
-              "bridgeIP"
+              "IP"
             ],
             "properties": {
               "bridgeIP": {
@@ -41,10 +40,6 @@
               "bridgePort": {
                 "type": "integer",
                 "minimum": 1
-              },
-              "zone": {
-                "type": "integer",
-                "minimum": 0
               }
             }
           }
@@ -52,6 +47,6 @@
       }
     }
   },
-  "short_name": "miLight",
-  "version": "0.0.6"
+  "short_name": "sonoff-diy",
+  "version": "0.0.1"
 }

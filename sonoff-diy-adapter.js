@@ -53,34 +53,12 @@ class sonoffProperty extends Property {
     super(device, name, descr);
     this.setCachedValue(value);
   }
-
-  /**
-   * Set the value of the property.
-   *
-   * @param {*} value The new value to set
-   * @returns a promise which resolves to the updated value.
-   *
-   * @note it is possible that the updated value doesn't match
-   * the value passed in.
-   */
-  setValue(value) {
-    return new Promise((resolve) => {
-      const changed = (this.value !== value);
-      this.setCachedValue(value);
-      resolve(this.value);
-      if(this.name == 'on') {
-        this.device.notifyStateChanged(this, 1/*changed*/);
-      }
-      else {
-        /* should not happen */
-      }
-    });
-  }
 }
 
 class sonoffDevice extends Device {
   constructor(adapter, id, template, config) {
     super(adapter, id);
+    this.RESTclient = new Client();
     this.name = template.name;
     this.config = config;
     this['@context'] = template['@context'];
@@ -91,9 +69,9 @@ class sonoffDevice extends Device {
     }
   }
 
-  notifyStateChanged(property, changed) {
+  notifyPropertyChanged(property) {
     super.notifyPropertyChanged(property);
-    if(('on' == property.name) && changed) {
+    if ('on' == property.name) {
        this.adapter.sendProperties(this.id, property.value);
     }
   }
@@ -103,7 +81,7 @@ class sonoffAdapter extends Adapter {
   constructor(addonManager, config) {
     super(addonManager, manifest.id, manifest.id);
     addonManager.addAdapter(this);
-    for (var i = 0; i < config.switches.length; i++) {
+    for (let i = 0; i < config.switches.length; i++) {
       this.addDevice('sonoff-diy-adapter-' + i.toString(), toggleSwitch, config.switches[i]);
     }
   }
@@ -196,10 +174,8 @@ class sonoffAdapter extends Adapter {
   }
 
   sendProperties(deviceId, state) {
-    var client = new Client();
-
     // set content-type header and data as json in args
-    var args = {
+    const args = {
       data: { "on": state },
       headers: { "Content-Type": "application/json" }
     };
@@ -208,13 +184,14 @@ class sonoffAdapter extends Adapter {
     if (this.devices[deviceId]) {
       this.devices[deviceId].recentlyUpdated = true;
     }
-    client.post("http://" + this.devices[deviceId].config.IP + ":" + this.devices[deviceId].config.Port + "/zeroconf/switch", 
-                args, (data, response)=> {
+    this.devices[deviceId].RESTclient.post("http://" + this.devices[deviceId].config.IP + ":" + this.devices[deviceId].config.Port + "/zeroconf/switch", 
+                                          args, (data, response)=> {
                                           // parsed response body as js object
-                                          //console.log(data);
-                                          // raw response
-                                          //console.log(response);
-                                        });
+                                          console.log(response); // just for test
+                                          if (data.seq === undefined) {
+                                            console.log('sonoff-diyAdapter: error sending switch command');
+                                          }
+                                          });
   }
 }
 

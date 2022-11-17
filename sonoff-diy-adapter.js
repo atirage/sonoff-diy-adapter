@@ -175,8 +175,14 @@ class sonoffAdapter extends Adapter {
 
   sendProperties(deviceId, state) {
     // set content-type header and data as json in args
+    const cmd = state ? "on":"off";
     const args = {
-      data: { "on": state },
+      data: { 
+             "deviceid": "", 
+             "data": {
+              "switch": cmd 
+              }
+            },
       headers: { "Content-Type": "application/json" }
     };
 
@@ -187,7 +193,7 @@ class sonoffAdapter extends Adapter {
     this.devices[deviceId].RESTclient.post("http://" + this.devices[deviceId].config.IP + ":" + this.devices[deviceId].config.Port + "/zeroconf/switch", 
                                           args, (data, response)=> {
                                           // parsed response body as js object
-                                          console.log(response); // just for test
+                                          //console.log(data);
                                           if (data.seq === undefined) {
                                             console.log('sonoff-diyAdapter: error sending switch command');
                                           }
@@ -200,7 +206,7 @@ function loadsonoffAdapter(addonManager) {
   db.open().then(() => {
     return db.loadConfig();
   }).then((config) => {
-    console.log('sonoff-diyAdapter:', config.bulbs);
+    console.log('sonoff-diyAdapter:', config.switches);
     new sonoffAdapter(addonManager, config);
   });
 }

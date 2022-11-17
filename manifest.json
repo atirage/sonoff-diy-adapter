@@ -19,7 +19,7 @@
       "switches": [
         {
           "IP": "192.168.1.66",
-          "Port": 8801
+          "Port": 8081
         }
       ]
     },
@@ -34,10 +34,10 @@
               "IP"
             ],
             "properties": {
-              "bridgeIP": {
+              "IP": {
                 "type": "string"
               },
-              "bridgePort": {
+              "Port": {
                 "type": "integer",
                 "minimum": 1
               }
